@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+mrclean
+
+# Data files
+*.csv
