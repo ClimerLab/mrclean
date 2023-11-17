@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Smith"
+  given-names: "Ken"
+  orcid: "https://orcid.org/0000-0002-7292-8268"
+title: "Mr. Clean"
+version: 1.0.0
+license: BSD-3-Clause
+license-url: "https://github.com/ClimerLab/mrclean/blob/main/LICENSE"
+repository-code: "https://github.com/ClimerLab/mrclean/"
+keywords:
+  - data cleaning
+  - integer program
+type: software
+url: "https://github.com/ClimerLab/mrclean/"
