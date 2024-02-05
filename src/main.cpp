@@ -48,8 +48,8 @@ int main(int argc, char *argv[]) {
   }
 
   // Check user inputs
-  if ((max_perc_missing < 0) || (max_perc_missing > 1)) {
-    throw std::runtime_error("max_perc_missing must be between [0,1].");
+  if ((max_perc_missing < 0) || (max_perc_missing >= 1)) {
+    throw std::runtime_error("max_perc_missing must be between [0,1).");
   }
 
   // Check config parser values
