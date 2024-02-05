@@ -33,7 +33,7 @@ EXE = mrclean
 # Object files
 #---------------------------------------------------------------------------------------------------
 
-OBJ = BinContainer.o GreedySolver.o RowColSolver.o ElementSolver.o Timer.o ConfigParser.o \
+OBJ = BinContainer.o RowColSolver.o ElementSolver.o Timer.o ConfigParser.o \
 			CleanSolution.o
 ALL_OBJ = $(OBJ) clean.o
 
@@ -82,11 +82,6 @@ $(OBJDIR)/RowColSolver.o:	$(addprefix $(SRCDIR)/, RowColSolver.cpp RowColSolver.
 
 $(OBJDIR)/ElementSolver.o:	$(addprefix $(SRCDIR)/, ElementSolver.cpp ElementSolver.h) \
 				   							$(addprefix $(OBJDIR)/, BinContainer.o)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
-
-$(OBJDIR)/GreedySolver.o:	$(addprefix $(SRCDIR)/, GreedySolver.cpp GreedySolver.h) \
-													$(addprefix $(SRCDIR)/, MrCleanUtils.h) \
-				   								$(addprefix $(OBJDIR)/, BinContainer.o)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJDIR)/BinContainer.o: $(addprefix $(SRCDIR)/, BinContainer.cpp BinContainer.h)

@@ -6,7 +6,6 @@
 #include <assert.h>
 
 #include "BinContainer.h"
-#include "GreedySolver.h"
 #include "RowColSolver.h"
 #include "ElementSolver.h"
 #include "Timer.h"
