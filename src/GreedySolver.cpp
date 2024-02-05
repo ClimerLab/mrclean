@@ -6,7 +6,7 @@
 //------------------------------------------------------------------------------
 // Constructor.
 //------------------------------------------------------------------------------
-GreedySolver::GreedySolver(const DataContainer &_data,
+GreedySolver::GreedySolver(const BinContainer &_data,
                            const double _max_perc_miss) : data(&_data),
                                                             num_rows(data->get_num_data_rows()),
                                                             num_cols(data->get_num_data_cols()),

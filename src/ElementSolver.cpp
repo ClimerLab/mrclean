@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 // Constructor.
 //------------------------------------------------------------------------------
-ElementSolver::ElementSolver(const DataContainer &_data,      
+ElementSolver::ElementSolver(const BinContainer &_data,      
                      const double _min_perc_missing,
                      const double _TOL) : data(&_data),
                                           TOL(_TOL),
@@ -44,7 +44,7 @@ std::size_t ElementSolver::get_data_idx(const std::size_t i, const std::size_t j
 }
 
 //------------------------------------------------------------------------------
-// Builds the CPLEX model based on the DataContainer object.
+// Builds the CPLEX model based on the BinContainer object.
 //------------------------------------------------------------------------------
 void ElementSolver::build_model() {
   // Add objective function
@@ -353,7 +353,7 @@ void ElementSolver::set_incumbent(const std::vector<int> &keep_rows, const std::
 // //------------------------------------------------------------------------------
 // // Constructor.
 // //------------------------------------------------------------------------------
-// ElementSolver::ElementSolver(const DataContainer &_data,
+// ElementSolver::ElementSolver(const BinContainer &_data,
 //                      const std::string &_na_symbol,                     
 //                      const double _min_perc_missing,
 //                      const double _TOL) : data(&_data),
@@ -398,7 +398,7 @@ void ElementSolver::set_incumbent(const std::vector<int> &keep_rows, const std::
 // }
 
 // //------------------------------------------------------------------------------
-// // Builds the CPLEX model based on the DataContainer object.
+// // Builds the CPLEX model based on the BinContainer object.
 // //------------------------------------------------------------------------------
 // void ElementSolver::build_model() {
 //   // Add objective function

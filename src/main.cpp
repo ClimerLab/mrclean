@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <assert.h>
 
-#include "DataContainer.h"
+#include "BinContainer.h"
 #include "GreedySolver.h"
 #include "RowColSolver.h"
 #include "ElementSolver.h"
@@ -13,7 +13,7 @@
 #include "ConfigParser.h"
 #include "CleanSolution.h"
 
-void summarize_results(const DataContainer &data,
+void summarize_results(const BinContainer &data,
                        const std::string &na_symbol,
                        const double elapsed_cpu_time,
                        const std::size_t num_rows_kept,
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
   Timer timer;
 
   // Read in the data
-  DataContainer data(data_file, miss_symbol, num_header_rows, num_header_cols);
+  BinContainer data(data_file, miss_symbol, num_header_rows, num_header_cols);
   fprintf(stderr, "\nSummary of raw data file\n");
   fprintf(stderr, "\tNum rows before cleaning: %lu\n", data.get_num_data_rows());
   fprintf(stderr, "\tNum cols before cleaning: %lu\n", data.get_num_data_cols());
@@ -158,9 +158,9 @@ int main(int argc, char *argv[]) {
   }
 
   if (best_alg == 0) {
-    data.write(cleaned_file, rc_rows_to_keep, rc_cols_to_keep);
+    data.write_orig(cleaned_file, rc_rows_to_keep, rc_cols_to_keep);
   } else {
-    data.write(cleaned_file, element_rows_to_keep, element_cols_to_keep);
+    data.write_orig(cleaned_file, element_rows_to_keep, element_cols_to_keep);
   }
   
   // Wrtie statistics to file
@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
 //------------------------------------------------------------------------------
 // Print summary of algorithm to screen
 //------------------------------------------------------------------------------
-void summarize_results(const DataContainer &data,
+void summarize_results(const BinContainer &data,
                        const std::string &na_symbol,
                        const double elapsed_cpu_time,
                        const std::size_t num_rows_kept,

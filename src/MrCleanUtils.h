@@ -2,7 +2,7 @@
 #define MR_CLEAN_UTILS_H
 
 #include <vector>
-#include "DataContainer.h"
+#include "BinContainer.h"
 
 namespace mr_clean_utils { 
  struct SortPairByFirstItemDecreasing

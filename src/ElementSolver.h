@@ -5,12 +5,12 @@
 #include <ilcplex/ilocplex.h>
 #include <ilconcert/ilomodel.h>
 
-#include "DataContainer.h"
+#include "BinContainer.h"
 
 class ElementSolver
 {
 private:
-  const DataContainer *data;
+  const BinContainer *data;
   const double TOL;
   const double max_perc_missing;
 
@@ -39,7 +39,7 @@ private:
   void round_extreme_values();
 
 public:
-  ElementSolver(const DataContainer &_data,
+  ElementSolver(const BinContainer &_data,
                 const double _min_perc_missing,
                 const double _TOL = 0.000001);
   ~ElementSolver();
@@ -57,7 +57,7 @@ public:
 // class ElementSolver
 // {
 // private:
-//   const DataContainer *data;
+//   const BinContainer *data;
 //   const std::string na_symbol;
 //   const double TOL;
 //   const double max_perc_missing;
@@ -90,7 +90,7 @@ public:
 //   void round_extreme_values();  
 
 // public:
-//   ElementSolver(const DataContainer &_data,
+//   ElementSolver(const BinContainer &_data,
 //             const std::string &_na_symbol,
 //             const double _min_perc_missing,
 //             const double _TOL = 0.000001);

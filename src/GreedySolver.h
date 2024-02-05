@@ -2,12 +2,12 @@
 #define GREEDY_SOLVER_H
 
 #include <vector>
-#include "DataContainer.h"
+#include "BinContainer.h"
 
 class GreedySolver
 {
 private:
-  const DataContainer *data;
+  const BinContainer *data;
   const std::size_t num_rows;
   const std::size_t num_cols;
   const double max_perc_miss;
@@ -38,7 +38,7 @@ private:
   std::size_t calc_num_cols_to_remove(const std::size_t idx) const;
   
 public:
-  GreedySolver(const DataContainer &_data,
+  GreedySolver(const BinContainer &_data,
                const double max_perc_miss);
   ~GreedySolver();
 

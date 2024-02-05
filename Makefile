@@ -33,7 +33,7 @@ EXE = mrclean
 # Object files
 #---------------------------------------------------------------------------------------------------
 
-OBJ = DataContainer.o GreedySolver.o RowColSolver.o ElementSolver.o Timer.o ConfigParser.o \
+OBJ = BinContainer.o GreedySolver.o RowColSolver.o ElementSolver.o Timer.o ConfigParser.o \
 			CleanSolution.o
 ALL_OBJ = $(OBJ) clean.o
 
@@ -77,19 +77,19 @@ $(OBJDIR)/clean.o:	$(addprefix $(SRCDIR)/, main.cpp) \
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJDIR)/RowColSolver.o:	$(addprefix $(SRCDIR)/, RowColSolver.cpp RowColSolver.h) \
-				   							$(addprefix $(OBJDIR)/, DataContainer.o)
+				   							$(addprefix $(OBJDIR)/, BinContainer.o)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJDIR)/ElementSolver.o:	$(addprefix $(SRCDIR)/, ElementSolver.cpp ElementSolver.h) \
-				   							$(addprefix $(OBJDIR)/, DataContainer.o)
+				   							$(addprefix $(OBJDIR)/, BinContainer.o)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(OBJDIR)/GreedySolver.o:	$(addprefix $(SRCDIR)/, GreedySolver.cpp GreedySolver.h) \
 													$(addprefix $(SRCDIR)/, MrCleanUtils.h) \
-				   								$(addprefix $(OBJDIR)/, DataContainer.o)
+				   								$(addprefix $(OBJDIR)/, BinContainer.o)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
 
-$(OBJDIR)/DataContainer.o: $(addprefix $(SRCDIR)/, DataContainer.cpp DataContainer.h)
+$(OBJDIR)/BinContainer.o: $(addprefix $(SRCDIR)/, BinContainer.cpp BinContainer.h)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJDIR)/Timer.o: $(addprefix $(SRCDIR)/, Timer.cpp Timer.h)

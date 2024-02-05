@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------
 // Constructor
 //------------------------------------------------------------------------------
-RowColSolver::RowColSolver(const DataContainer &_data,
+RowColSolver::RowColSolver(const BinContainer &_data,
                            const double _min_perc_missing,
                            const double _TOL) : data(&_data),
                                                 TOL(_TOL),
@@ -35,7 +35,7 @@ RowColSolver::~RowColSolver() {}
 
 
 //------------------------------------------------------------------------------
-// Builds the CPLEX model based on the DataContainer object.
+// Builds the CPLEX model based on the BinContainer object.
 //------------------------------------------------------------------------------
 void RowColSolver::build_model() {
   // Add objective function
