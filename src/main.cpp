@@ -91,8 +91,21 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "Starting Row Col IP...\n");
     RowColSolver rc_solver(data, max_perc_missing);
 
-    if (SEEDING_MIP) {      
-      rc_solver.set_incumbent(clean_sol.get_rows_to_keep(), clean_sol.get_cols_to_keep());
+    if (SEEDING_MIP) {
+      auto incumb_rows = clean_sol.get_rows_to_keep();
+      auto incumb_cols = clean_sol.get_cols_to_keep();
+      double limit = 0.0;
+      for (std::size_t i = 0; i < incumb_rows.size(); ++i) {
+        if (incumb_rows[i] == 1) {
+          limit += data.get_num_valid_in_row(i);
+        }
+      } 
+      for (std::size_t j = 0; j < incumb_cols.size(); ++j) {
+        if (incumb_cols[j] == 1) {
+          limit += data.get_num_valid_in_col(j);
+        }
+      }
+      rc_solver.set_incumbent_obj(limit);
     }
     
     timer.restart();
@@ -121,7 +134,20 @@ int main(int argc, char *argv[]) {
     ElementSolver element_solver(data, max_perc_missing);
 
     if (SEEDING_MIP) {
-      element_solver.set_incumbent(clean_sol.get_rows_to_keep(), clean_sol.get_cols_to_keep());
+      auto incumb_rows = clean_sol.get_rows_to_keep();
+      auto incumb_cols = clean_sol.get_cols_to_keep();
+      double limit = 0.0;
+      for (std::size_t i = 0; i < incumb_rows.size(); ++i) {
+        if (incumb_rows[i] == 0) { continue; }
+
+        for (std::size_t j = 0; j < incumb_cols.size(); ++j) {
+          if (incumb_cols[j] == 1 && !data.is_data_na(i,j)) {
+            ++limit;
+          }
+        }
+      }
+
+      element_solver.set_incumbent_obj(limit);
     }
     
     timer.restart();

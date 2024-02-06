@@ -21,7 +21,9 @@ private:
   std::vector<double> r_var;
   std::vector<double> c_var;
   double obj_value;
-  bool use_incumbent;
+
+  bool use_incumbent_obj;
+  double limit;
 
   IloEnv env;
   IloCplex cplex;
@@ -48,8 +50,7 @@ public:
   std::size_t get_num_rows_to_keep() const;
   std::size_t get_num_cols_to_keep() const;
 
-  void set_incumbent(const std::vector<bool> &keep_rows, const std::vector<bool> &keep_cols);
-  void set_incumbent(const std::vector<int> &keep_rows, const std::vector<int> &keep_cols);
+  void set_incumbent_obj(const double _obj);
 };
 
 #endif

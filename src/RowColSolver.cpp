@@ -15,7 +15,8 @@ RowColSolver::RowColSolver(const BinContainer &_data,
                                                 r_var(num_rows),
                                                 c_var(num_cols),
                                                 obj_value(0),
-                                                use_incumbent(false),
+                                                use_incumbent_obj(false),
+                                                limit(0.0),
                                                 env(IloEnv()),
                                                 cplex(IloCplex(env)),
                                                 model(IloModel(env)),
@@ -116,9 +117,9 @@ void RowColSolver::round_extreme_values() {
 //------------------------------------------------------------------------------
 void RowColSolver::solve() {
   cplex.extract(model);
-  if (use_incumbent) {
-    cplex.addMIPStart(r, r_copy);
-    cplex.addMIPStart(c, c_copy);
+
+  if (use_incumbent_obj) {
+    cplex.setParam(IloCplex::Param::MIP::Tolerances::LowerCutoff, limit);
   }
   
   // cplex.setParam(IloCplex::Param::MIP::Tolerances::MIPGap, .04);
@@ -229,63 +230,9 @@ std::size_t RowColSolver::get_num_cols_to_keep() const {
 }
 
 //------------------------------------------------------------------------------
-// Takes two boolean vectors indicating which rows and columns to keep, and
-// uses them to provide CPLEX an initial solution.
+// Takes a double representing a lower limit in the objective value.
 //------------------------------------------------------------------------------
-void RowColSolver::set_incumbent(const std::vector<bool> &keep_rows, const std::vector<bool> &keep_cols) {
-  assert(keep_rows.size() == num_rows);
-  assert(keep_cols.size() == num_cols);
-  assert(keep_rows.size() * keep_cols.size() == num_data);
-
-  use_incumbent = true;
-
-  for (std::size_t i = 0; i < num_rows; ++i) {
-    if (keep_rows[i]) {
-      r_copy[i] = 1.0;
-    } else {
-      r_copy[i] = 0.0;
-    }
-  }
-
-  for (std::size_t j = 0; j < num_cols; ++j) {
-    if (keep_cols[j]) {
-      c_copy[j] = 1.0;
-    } else {
-      c_copy[j] = 0.0;
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
-// Takes two int vectors indicating which rows and columns to keep, and
-// uses them to provide CPLEX an initial solution.
-//------------------------------------------------------------------------------
-void RowColSolver::set_incumbent(const std::vector<int> &keep_rows, const std::vector<int> &keep_cols) {
-  assert(keep_rows.size() == num_rows);
-  assert(keep_cols.size() == num_cols);
-  assert(keep_rows.size() * keep_cols.size() == num_data);
-
-  use_incumbent = true;
-
-  for (std::size_t i = 0; i < num_rows; ++i) {
-    if (keep_rows[i] == 1) {
-      r_copy[i] = 1.0;
-    } else if (keep_rows[i] == 0) {
-      r_copy[i] = 0.0;
-    } else {
-      fprintf(stderr, "ERROR - RowColSolver::set_incumbent - Unknown solution value in row %lu.\n", i);
-      exit(EXIT_FAILURE);
-    }
-  }
-
-  for (std::size_t j = 0; j < num_cols; ++j) {
-    if (keep_cols[j] == 1) {
-      c_copy[j] = 1.0;
-    } else if (keep_cols[j] == 0) {
-      c_copy[j] = 0.0;
-    } else {
-      fprintf(stderr, "ERROR - RowColSolver::set_incumbent - Unknown solution value in col %lu.\n", j);
-      exit(EXIT_FAILURE);
-    }
-  }
+void RowColSolver::set_incumbent_obj(const double _obj) {
+  use_incumbent_obj = true;
+  limit = _obj;
 }
