@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
   std::vector<bool> element_rows_to_keep(data.get_num_data_rows(), false), element_cols_to_keep(data.get_num_data_cols(), false);
   if (RUN_ELEMENT) {
     fprintf(stderr, "Starting Element IP...\n");
-    ElementSolver element_solver(data, max_perc_missing);
+    ElementSolver element_solver(data, max_perc_missing, row_lb, col_lb);
 
     if (SEEDING_MIP) {
       auto incumb_rows = clean_sol.get_rows_to_keep();

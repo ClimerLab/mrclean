@@ -5,30 +5,33 @@
 // Constructor.
 //------------------------------------------------------------------------------
 ElementSolver::ElementSolver(const BinContainer &_data,      
-                     const double _min_perc_missing,
-                     const double _TOL) : data(&_data),
-                                          TOL(_TOL),
-                                          max_perc_missing(_min_perc_missing),
-                                          num_rows(data->get_num_data_rows()),
-                                          num_cols(data->get_num_data_cols()),
-                                          num_data(num_rows * num_cols),
-                                          x_var(num_data),
-                                          r_var(num_rows),
-                                          c_var(num_cols),
-                                          obj_value(0),
-                                          use_incumbent_obj(false),
-                                          limit(0.0),
-                                          env(IloEnv()),
-                                          cplex(IloCplex(env)),
-                                          model(IloModel(env)),
-                                          x(IloNumVarArray(env, num_data, 0, 1, ILOINT)),
-                                          r(IloNumVarArray(env, num_rows, 0, 1, ILOINT)),
-                                          c(IloNumVarArray(env, num_cols, 0, 1, ILOINT)),
-                                          x_copy(IloNumArray(env, num_data)),                                          
-                                          r_copy(IloNumArray(env, num_rows)),
-                                          c_copy(IloNumArray(env, num_cols)),
-                                          obj(IloExpr(env))
-{
+                             const double _min_perc_missing,
+                             const std::size_t _row_lb,
+                             const std::size_t _col_lb, 
+                             const double _TOL) : data(&_data),
+                                                  TOL(_TOL),
+                                                  max_perc_missing(_min_perc_missing),
+                                                  row_lb(_row_lb),
+                                                  col_lb(_col_lb),
+                                                  num_rows(data->get_num_data_rows()),
+                                                  num_cols(data->get_num_data_cols()),
+                                                  num_data(num_rows * num_cols),
+                                                  x_var(num_data),
+                                                  r_var(num_rows),
+                                                  c_var(num_cols),
+                                                  obj_value(0),
+                                                  use_incumbent_obj(false),
+                                                  limit(0.0),
+                                                  env(IloEnv()),
+                                                  cplex(IloCplex(env)),
+                                                  model(IloModel(env)),
+                                                  x(IloNumVarArray(env, num_data, 0, 1, ILOINT)),
+                                                  r(IloNumVarArray(env, num_rows, 0, 1, ILOINT)),
+                                                  c(IloNumVarArray(env, num_cols, 0, 1, ILOINT)),
+                                                  x_copy(IloNumArray(env, num_data)),                                          
+                                                  r_copy(IloNumArray(env, num_rows)),
+                                                  c_copy(IloNumArray(env, num_cols)),
+                                                  obj(IloExpr(env)) {
   build_model();
 }
 
@@ -90,6 +93,21 @@ void ElementSolver::build_model() {
     model.add(c[j] + row_sum <= 1);
     row_sum.end();
   }
+
+  // Add constraint for row_lb and col_lb
+  IloExpr row_lb_sum(env);
+  for (std::size_t i = 0; i < num_rows; ++i) {
+    row_lb_sum += r[i];
+  }
+  model.add(row_lb_sum >= static_cast<double>(row_lb));
+  row_lb_sum.end();
+
+  IloExpr col_lb_sum(env);
+  for (std::size_t j = 0; j < num_cols; ++j) {
+    col_lb_sum += c[j];
+  }
+  model.add(col_lb_sum >= static_cast<double>(col_lb));
+  col_lb_sum.end();
 }
 
 //------------------------------------------------------------------------------
