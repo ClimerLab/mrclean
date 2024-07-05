@@ -13,6 +13,8 @@ private:
   const BinContainer *data;
   const double TOL;
   const double max_perc_missing;
+  const std::size_t row_lb;
+  const std::size_t col_lb;
 
   std::size_t num_rows;
   std::size_t num_cols;
@@ -40,6 +42,8 @@ private:
 public:
   RowColSolver(const BinContainer &_data,
                const double _min_perc_missing,
+               const std::size_t _row_lb,
+               const std::size_t _col_lb,
                const double _TOL = 0.00001);
   ~RowColSolver();
 
