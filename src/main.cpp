@@ -29,21 +29,23 @@ void write_stats_to_file(const std::string &file_name,
                          const std::size_t num_cols_kept);
 
 int main(int argc, char *argv[]) {
-  if (!((argc == 6) || (argc == 7))) {
-    fprintf(stderr, "Usage: %s <data_file> <max_missing> <miss_symbol> <num_header_rows> <num_header_cols> (opt)<incument_file>", argv[0]);
+  if (!((argc == 8) || (argc == 9))) {
+    fprintf(stderr, "Usage: %s <data_file> <max_missing> <row_lb> <col_lb> <miss_symbol> <num_header_rows> <num_header_cols> (opt)<incument_file>", argv[0]);
     exit(EXIT_FAILURE);
   }
 
   // Read in user inputs
   std::string data_file(argv[1]);
   double max_perc_missing = std::stod(argv[2]);
-  std::string miss_symbol(argv[3]);
-  std::size_t num_header_rows = std::stoul(argv[4]);
-  std::size_t num_header_cols = std::stoul(argv[5]);
+  std::size_t row_lb = std::stoul(argv[3]);
+  std::size_t col_lb = std::stoul(argv[4]);
+  std::string miss_symbol(argv[5]);
+  std::size_t num_header_rows = std::stoul(argv[6]);
+  std::size_t num_header_cols = std::stoul(argv[7]);
   std::string incumbent_file = "";
   bool SEEDING_MIP = false;
-  if (argc == 7) {
-    incumbent_file = argv[6];
+  if (argc == 9) {
+    incumbent_file = argv[8];
     SEEDING_MIP = true;
   }
 
@@ -89,7 +91,7 @@ int main(int argc, char *argv[]) {
   std::vector<bool> rc_rows_to_keep(data.get_num_data_rows(), false), rc_cols_to_keep(data.get_num_data_cols(), false);
   if (RUN_ROW_COL) {
     fprintf(stderr, "Starting Row Col IP...\n");
-    RowColSolver rc_solver(data, max_perc_missing);
+    RowColSolver rc_solver(data, max_perc_missing, row_lb, col_lb);
 
     if (SEEDING_MIP) {
       auto incumb_rows = clean_sol.get_rows_to_keep();
