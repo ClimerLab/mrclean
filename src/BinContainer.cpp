@@ -45,15 +45,15 @@ void BinContainer::read() {
   const std::size_t num_data_rows = num_rows - num_header_rows;
   const std::size_t num_data_cols = num_cols - num_header_cols;
 
-  fprintf(stderr, "Num rows: %lu\n", num_rows);
-  fprintf(stderr, "Num cols: %lu\n", num_cols);
+  // fprintf(stderr, "Num rows: %lu\n", num_rows);
+  // fprintf(stderr, "Num cols: %lu\n", num_cols);
 
   // Allocate memory
   std::vector<bool> data_row(num_data_cols);
   for (std::size_t i = 0; i < num_data_rows; ++i) {
     data.push_back(data_row);
   }
-  fprintf(stderr, "Allocated memory\n");
+  // fprintf(stderr, "Allocated memory\n");
 
   // Read in data
   input.seekg(std::ios_base::beg);  // Go to beginning of file
@@ -196,7 +196,7 @@ std::size_t BinContainer::get_num_invalid_in_row(const std::size_t row) const {
     fprintf(stderr, "ERROR - BinContainer::get_num_invalid_in_row - Trying to access index out of bounds\n");
     exit(EXIT_FAILURE);
   }
-  return get_num_data_rows() - num_valid_rows[row];
+  return get_num_data_cols() - num_valid_rows[row];
 }
 
 std::size_t BinContainer::get_num_invalid_in_col(const std::size_t col) const {
@@ -204,7 +204,7 @@ std::size_t BinContainer::get_num_invalid_in_col(const std::size_t col) const {
     fprintf(stderr, "ERROR - BinContainer::get_num_invalid_in_col - Trying to access index out of bounds\n");
     exit(EXIT_FAILURE);
   }
-  return get_num_data_cols() - num_valid_cols[col];
+  return get_num_data_rows() - num_valid_cols[col];
 }
 
 std::size_t BinContainer::get_num_valid_in_row(const std::size_t row) const {
