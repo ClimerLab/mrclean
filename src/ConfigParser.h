@@ -1,14 +1,13 @@
 #ifndef CONFIG_PARSER
 #define CONFIG_PARSER
 
-#include <boost/multiprecision/cpp_int.hpp>
+// #include <boost/multiprecision/cpp_int.hpp>
 #include <fstream>
 #include <map>
 #include <sstream>
 #include <algorithm>
 
-class ConfigParser
-{
+class ConfigParser {
   private:
     std::string inputfileName;
     std::map<std::string, std::string> values;
@@ -24,7 +23,7 @@ class ConfigParser
     double getDouble(const std::string &) const;
     float getFloat(const std::string &) const;
     int getInt(const std::string &) const;
-    boost::multiprecision::cpp_int getMultiprecisionInt(const std::string &) const;
+    // boost::multiprecision::cpp_int getMultiprecisionInt(const std::string &) const;
     short getShort(const std::string &) const;
     std::size_t getSizeT(const std::string &) const;
     std::string getString(const std::string &) const;
