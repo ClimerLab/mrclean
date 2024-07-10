@@ -17,6 +17,10 @@ or                                  ./mrclean data_file.tsv 0.05 NA 100 200 1 1 
 
 <max_missing> - Maximum percent of data allowed in each row and column in the cleaned data file.
 
+<row_lb> - Minimum number of rows allowed in a solution
+
+<col_lb> - Minimum number of columns allowed in a solution
+
 <miss_symbol> - String used to indicate missing data in <data_file>.
 
 <num_header_rows> - Number of header rows in <data_file>.
